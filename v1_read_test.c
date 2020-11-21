@@ -3,14 +3,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int		main(void)
-{
-	int		fd;
-	char	*c;
-	int		i;
-	int		flag;
-	int		count;
 
+void	get_line(void)
+{
+	char		*c;
+	int			i;
+	int			flag;
+	int			count;
+	static int	line;
+	int			fd;
+
+	printf("line = %d\n", line);
 	fd = open("text.txt", O_RDONLY);
 	c = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	i = 0;
@@ -21,7 +24,7 @@ int		main(void)
 	while (flag != 1)
 	{
 		read(fd, c, BUFFER_SIZE);
-		//printf("%c\n", *c);
+		printf("%c\n", *c);
 		while (i < BUFFER_SIZE)
 		{
 			printf("*(c + i) = %c\n", *(c + i));
@@ -37,9 +40,17 @@ int		main(void)
 		count++;
 		if (flag != 1)
 			printf("No newline found\n\n");
-	printf("line = %d\n", line);
 	}
-	close(fd);
+	line++;
 	free(c);
+	close(fd);
+}
+
+int		main(void)
+{
+
+	get_line();
+	get_line();
 	return (0);
+
 }
