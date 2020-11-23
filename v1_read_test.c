@@ -21,7 +21,7 @@ void	get_line(void)
 	count = 0;
 	if (fd < 0)
 		exit(1);
-	while (flag != 1)
+	while (flag < line + 1)
 	{
 		read(fd, c, BUFFER_SIZE);
 		printf("%c\n", *c);
@@ -30,15 +30,15 @@ void	get_line(void)
 			printf("*(c + i) = %c\n", *(c + i));
 			if (*(c + i) == '\n')
 			{
-				printf("Found newline at index = %d, break\n", i + (count * BUFFER_SIZE));
-				flag = 1;
+				flag++;
+				printf("Found newline at index = %d, flag = %d, break\n\n", i + (count * BUFFER_SIZE), flag);
 				break ;
 			}
 			i++;
 		}
 		i = 0;
 		count++;
-		if (flag != 1)
+		if (flag == 0)
 			printf("No newline found\n\n");
 	}
 	line++;
