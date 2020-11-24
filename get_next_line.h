@@ -6,8 +6,9 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/21 11:19:10 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/21 11:19:12 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/11/24 18:05:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+int		check_for_newline_in_arr(char *arr);
 

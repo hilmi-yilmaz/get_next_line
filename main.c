@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line_utils.c                              :+:    :+:            */
+/*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/21 11:18:55 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/24 18:04:59 by hyilmaz       ########   odam.nl         */
+/*   Created: 2020/11/24 10:49:53 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2020/11/24 18:05:01 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
+#include <fcntl.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-int		check_for_newline_in_arr(char *arr)
+int		get_next_line(int fd, char **line);
+char	*fill_array(char **line, char *arr, int count);
+
+int		main(void)
 {
 	int		i;
+	int		fd;
+	int 	result;
+	char	*line = NULL;
 
 	i = 0;
-	while (i < BUFFER_SIZE)
+	fd = open("text.txt", O_RDONLY);
+	result = get_next_line(fd, &line);
+	printf("OUTPUT MAIN FUNCTION *LINE = ");
+	while (i < 4)
 	{
-		if (*(arr + i) == '\n')
-			return (i);
-		i++;	
+		printf("%c", *(line + i));
+		i++;
 	}
-	return (-1);
-}
-
-char	*concat(char **line, char *buff, int factor)
-{
-	int		i;
-	
-	i  = 0;
-	*line = (char *)malloc(sizeof(char) * BUFFER_SIZE * factor);
-	
+	printf("\n");
+	close(fd);
+	free(line);
 }

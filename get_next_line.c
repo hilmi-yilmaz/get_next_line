@@ -6,44 +6,34 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/21 11:18:33 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/22 21:37:30 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/11/24 18:04:48 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include "get_next_line.h"
 
 int		get_next_line(int fd, char **line)
 {
-	static int	line_nb;
-	
-	int			i;
-	int			flag;
-	int			size;
-	int			count; //counts how many times BUFFER_SIZE fits in one line
-	int			len_line;
-
-	char		*arr;
-	
+	int		i;
+	int		flag;
+	int		size;
+	char	arr[BUFFER_SIZE + 1];
 
 	i = 0;
-	flag = 0;
-	count = 0;
-	arr = (char *)malloc(sizeof(char) * BUFFER_SIZE);
-	while (flag < line + 1)
+	flag = -1;
+	while (flag == -1)
 	{
+		printf("Reading file\n");
 		size = read(fd, arr, BUFFER_SIZE);
-		while (i < BUFFER_SIZE)
-		{
-			if (*(arr + i) == '\n')
-			{
-				flag++;
-				break ;	
-			}
-			i++;
-		}
-		i = 0;
-		count++;
-		
+		arr[BUFFER_SIZE] = '\0';
+		flag = check_for_newline_in_arr(arr);
+		printf("Check for \\n, flag = %d (flag = -1 means no \\n found)\n", flag);
+		/* If no newline is found in the buffer */
+			
+		i++;
 	}
-	line_nb++;
+	return (0);
 }
