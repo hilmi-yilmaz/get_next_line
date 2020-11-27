@@ -6,7 +6,7 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 10:49:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/25 19:34:33 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/11/27 19:47:55 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int		main(void)
 
 	i = 0;
 	fd = open("text.txt", O_RDONLY);
+
+	//First call to get_next_line
 	result = get_next_line(fd, &line);
 	printf("result = %d\n", result);
 	printf("OUTPUT MAIN FUNCTION *LINE = ");
@@ -36,6 +38,9 @@ int		main(void)
 		i++;
 	}
 	printf("\n");
+
+	//Second call to get_next_line
+	result = get_next_line(fd, &line);
 	close(fd);
 	free(line);
 }

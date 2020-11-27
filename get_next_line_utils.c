@@ -3,92 +3,51 @@
 /*                                                        ::::::::            */
 /*   get_next_line_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
+/*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/21 11:18:55 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/25 19:34:25 by hyilmaz       ########   odam.nl         */
+/*   Created: 2020/11/27 13:41:47 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2020/11/27 20:37:29 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
+#include "get_next_line.h"
 
-int		check_newline(char *buff)
-{
-	int		i;
-
-	i = 0;
-	while (i < BUFFER_SIZE)
-	{
-		if (*(buff + i) == '\n')
-			return (i);
-		i++;	
-	}
-	return (-1);
-}
-
-char	*concat(char *line, char *buff, int factor, int newline_index)
+int		get_next_line(int fd, char **line)
 {
 	int			i;
-	int			j;
-	char		*result;
-	static char	rest[BUFFER_SIZE];
+	int			flag;
+	int			buff_size;
+	char		buff[BUFFER_SIZE + 1];
 	
-	printf("Enter concat function with factor = %d & newline_index = %d\n", factor, newline_index);
-	i = 0;
-	j = 0;
-	if (newline_index == -1)
+	i = 1;
+	flag = 0;
+	*line = NULL;
+	while (flag == 0)
 	{
-		result = (char *)malloc(sizeof(char) * BUFFER_SIZE * factor + 1);
-		printf("Length of result = %d\n", BUFFER_SIZE * factor + 1);
-	}
-	else
-	{
-		result = (char *)malloc(sizeof(char) * BUFFER_SIZE * (factor - 1) + newline_index + 1);
-		printf("Length of result = %d\n", BUFFER_SIZE * (factor - 1) + newline_index + 1);
-	}
-	//+1 for null terminator
-	//printf("Length of rest = %d\n", newline_index + 1);
-	//printf("BUFFER_SIZE * (factor - 1) = %d\n", BUFFER_SIZE * (factor - 1));
-	//printf("BUFFER_SIZE * factor = %d\n", BUFFER_SIZE * factor);
-	while (i < BUFFER_SIZE * (factor - 1))
-	{
-		*(result + i) = *(line + i);
-		printf("Filling result with old line: i = %d, %c\n", i, *(result + i));
-		i++;
-	}
-	if (factor >= 2)
-	{
-		printf("Freeing old line\n");
-		free(line);
-	}
-	while (i < BUFFER_SIZE * factor)
-	{
-		if (*(buff + i - (BUFFER_SIZE * (factor - 1))) == '\n')
-			break ;
-		*(result + i) = *(buff + i - (BUFFER_SIZE * (factor - 1)));
-		//else append to static char
-		printf("Filling result with new buff: i = %d, %c\n", i, *(result + i));
-		i++;
-	}
-	*(result + i) = '\0';
-	while (i < BUFFER_SIZE * factor - 1)
-	{
-		*(rest + j) = *(buff + i - (BUFFER_SIZE * (factor - 1)) + 1); //plus one so newline doesnt get added
-		printf("Filling rest with remainder of buff: i = %d, %c\n", i, *(rest + j));
-		i++;
-		j++;
-	}
+		printf("\nEntered WHILE LOOP \n");
+		printf("Reading file into buff\n");
+		buff_size = read(fd, buff, BUFFER_SIZE);
+		printf("buff_size = %d\n", buff_size);
 
-	int k = 0;
-	printf("result = ");
-	while (*(result + k) != '\0')
-	{
-		printf("%c", *(result + k));
-		k++;
+		//Add terminating character to buff
+		buff[buff_size] = '\0';
+		printf("Buff = %s\n", buff);
+
+		//Check for newline in buff
+		flag = check_newline(buff);
+
+		//Transfer old line to newer line, which is a bigger array
+		*line = transfer(*line, buff, i);
+
+		//Concat line with buff. Save the remainder of buff in the static variable rest
+		concat(*line, buff);
+
+		i++;
+		printf("LEAVE WHILE LOOP\n");
 	}
-	printf("\n");
-	printf("Leave concat function\n");
-	return (result);
+	return (0);
 }
+
