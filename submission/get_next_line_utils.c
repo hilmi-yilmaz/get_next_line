@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/27 13:41:47 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/27 22:24:12 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/11/27 22:43:25 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int		get_next_line(int fd, char **line)
 	*line = NULL;
 	while (flag == 0)
 	{
-		//Read the data into buff
+		//Read data into buff
 		buff_size = read(fd, buff, BUFFER_SIZE);
+		if (buff_size == 0)
+			return (0);
 
 		//Add terminating character to buff
 		buff[buff_size] = '\0';
@@ -45,5 +47,6 @@ int		get_next_line(int fd, char **line)
 
 		i++;
 	}
-	return (0);
+	return (1);
 }
+
