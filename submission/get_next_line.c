@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/27 13:41:26 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/27 22:30:42 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/11/27 22:23:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,20 @@ void	concat(char *line, char *buff, char *rest)
 	int			j;
 	int			len_line;
 
-	printf("Entered concat function\n");
-	printf("buff = %s\n", buff);
-	printf("line = %s\n", line);
 	i = 0;
 	j = 0;
-	//Fill line with rest
-	//fill_remainder(line, rest);
 	len_line = ft_strlen(line);
 	while (*(buff + i) != '\0')
 	{
 		if (*(buff + i) == '\n')
 			break ;
 		*(line + i + len_line) = *(buff + i);
-		printf("Filling result with buff: i = %d, %c\n", i + len_line, *(line + i + len_line));
 		i++;
 	}
 	*(line + i + len_line) = '\0';
-	printf("Added \\0 to back of line at i = %d\n", i + len_line);
 	while (*(buff + i + 1) != '\0' && *(buff + i + 1) != '\n')
 	{
 		*(rest + j) = *(buff + i + 1);
-		printf("Filling rest with remainder of buff: i = %d, %c\n", j, *(rest + j));
 		j++;
 		i++;
 	}
@@ -51,17 +43,14 @@ void	concat(char *line, char *buff, char *rest)
 void	fill_remainder(char *line, char *rest)
 {
 	int i;
-	printf("Entered fill_remainder function\n");
 	i = 0;
 	while (*(rest + i) != '\0')
 	{
 		*(line + i) = *(rest + i);
-		printf("Filling line and setting rest to 0, i = %d, %c\n", i, *(line + i));
 		*(rest + i) = '\0';
 		i++;
 	}
 	*(line + i) = '\0';
-	printf("Leave fill_remainder function\n");
 }
 
 char	*transfer(char *line, char *buff, char *rest, int index) //index = how many times looped 
@@ -71,29 +60,18 @@ char	*transfer(char *line, char *buff, char *rest, int index) //index = how many
 	int		size_result;
 	char	*result;
 
-	printf("Entered transfer function with index = %d\n", index);
-	printf("line = %s\n", line);
 	i = 0;
 	len_line = ft_strlen(line);
-	printf("len_line = %d\n", len_line);
-	printf("len_rest = %d\n", ft_strlen(rest));
 	size_result = len_line + ft_strlen(buff) + ft_strlen(rest);
 	result = (char *)malloc(sizeof(char) * size_result + 1);
-	printf("Allocated memory = %d bytes\n", size_result + 1);
 	fill_remainder(result, rest);
-	printf("result = %s\n", result);
-	//Fill result with old line
 	while (i < len_line)
 	{
 		*(result + i) = *(line + i);
-		printf("Filling result with old line: i = %d, %c\n", i, *(result + i));
 		i++;
 	}
 	if (index >= 2)
-	{
-		printf("Freeing old line\n");
 		free(line);
-	}
 	return (result);
 }
 
