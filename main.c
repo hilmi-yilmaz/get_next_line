@@ -6,7 +6,7 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 10:49:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/27 22:30:47 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/11/28 12:05:24 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,32 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "get_next_line.h"
 
-int		get_next_line(int fd, char **line);
-char	*fill_array(char **line, char *arr, int count);
+char RED[] = "\033[1;31m";
+char RESET[] = "\033[0m";
 
 int		main(void)
 {
-	int		i;
 	int		fd;
 	int 	result;
-	char	*line = NULL;
+	char	*line;
 
-	i = 0;
 	fd = open("text.txt", O_RDONLY);
-
-	//First call to get_next_line
-	result = get_next_line(fd, &line);
-	printf("result = %d\n", result);
-	printf("OUTPUT MAIN FUNCTION *LINE = ");
-	while (*(line + i) != '\0')
+	result = 1;
+	line = NULL;
+	while (result != 0)
 	{
-		printf("%c", *(line + i));
-		i++;
+		result = get_next_line(fd, &line);
+		if (result == 0)
+			break ;
+		//printf("result = %d\n", result);
+		//printf("%s", RED);
+		printf("%s%s%s\n", RED, line, RESET);
+		//printf("%s", RESET);
+		free(line);
+		line = NULL;
 	}
-	printf("\n");
-	free(line);
-	//Second call to get_next_line
-	i = 0;
-	result = get_next_line(fd, &line);
-	while (*(line + i) != '\0')
-	{
-		printf("%c", *(line + i));
-		i++;
-	}
-	printf("\n");
 	close(fd);
 	free(line);
 }
