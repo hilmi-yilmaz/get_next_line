@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/28 14:07:29 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/28 15:50:32 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/11/29 17:40:56 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ int		get_next_line(int fd, char **line)
 	*line = NULL;
 	while (flag == 0)
 	{
-		
+
 		/* Read the data into buff and null-terminate the ending of buff.
 		** If return value of read system call is 0, return (0) (EOF reached).
 		*/
 		buff_size = read(fd, buff, BUFFER_SIZE);
 		buff[buff_size] = '\0';
-		printf("buff = %s\n", buff);
-		
+	
+		printf("--- GET_NEXT_LINE FUNCTION\n");
+		printf("buff = %s, buff_size = %d\n", buff, buff_size);
+		printf("line = %s\n", *line);
+		printf("rest = %s\n", rest);
+
 		/* If \n in buff, flag = 1 */
 		flag = check_newline(buff);
 
@@ -43,7 +47,9 @@ int		get_next_line(int fd, char **line)
 		concat(*line, buff, rest);
 
 		if (buff_size == 0)
+		{
 			return (0);
+		}
 	}
 	return (1);
 }
