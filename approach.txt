@@ -1,49 +1,6 @@
-How to read 1 line from a file?
+How to read a file line by line?
 
-Step 1:
-	
-	Create a buffer with size BUFFER_SIZE + 1 (+1 to add a Null Terminator)
-	
-	char	buff[BUFFER_SIZE + 1];
+Ideas: 
+	- Read untill a \n is found in *line, then flag = 1.
+	- Don't read while there is a \n in rest. 
 
-Step 2: 
-
-	Read the file descriptor with the read system call
-
-	If static char not empty: append static char to line. 
-	
-	size = read(fd, buff, BUFFER_SIZE);
-
-	if size = 0 --> EOF is reached. Return 0. 
-
-Step 3:
-
-	Create a function which takes buff and line as input and concatenates them. 
-	The concatenation uses \0 or \n as a stopsign for appending. 
-	If a \n is found, add the characters before the newline to line, and store the rest in a 
-	static buffer, which will be used during a second function call to get_next_line. 
-
-	char	**concat(char *buff, char **line)
-	{
-		static char remainder[BUFFER_SIZE];
-
-		char *temp (this will be the return value, this way I can free the old line);
-		
-		create a malloc for temp with size of current line;
-
-		add line to temp;
-
-		free line;
-
-		add buff to temp untill \n is found; 
-
-		add the rest to remainder;
-
-		return (temp);
-	}
-
-Step 4:
-	
-	Check whether the static char has something in it;
-	if so, return 1. 
-	else return -1 (error happenend).
