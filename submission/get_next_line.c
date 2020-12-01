@@ -1,51 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line_utils.c                              :+:    :+:            */
+/*   get_next_line.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/27 13:41:47 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/28 12:10:40 by hyilmaz       ########   odam.nl         */
+/*   Created: 2020/11/29 15:56:23 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2020/12/01 20:13:15 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "get_next_line.h"
 
 int		get_next_line(int fd, char **line)
 {
-	int			i;
-	int			flag;
-	int			buff_size;
+	int			size;
 	char		buff[BUFFER_SIZE + 1];
 	static char	rest[BUFFER_SIZE];
-	
-	i = 1;
-	flag = 0;
+
 	*line = NULL;
-	while (flag == 0)
+	while (check_newline(*line, 0) == 0) //while no /n in *line
 	{
-		buff_size = read(fd, buff, BUFFER_SIZE);
 
-		//Add terminating character to buff
-		buff[buff_size] = '\0';
-		if (buff_size == 0)
-			return (0);
-
-		//Check for newline in buff
-		flag = check_newline(buff);
-
-		//Transfer old line to newer line, which is a bigger array
-		*line = transfer(*line, buff, rest, i);
-
-		//Concat line with buff. Save the remainder of buff in the static variable rest
-		concat(*line, buff, rest);
-
-		i++;
+		// If \n in rest --> Fill *line with rest untill \n, no  other opeations required, return size = 1;
+		if (check_newline(rest, 1) == 1)
+		{		
+			*line = create_array(*line, buff, rest);
+			rest_to_line(*line, rest);
+			size = 1;
+			return (size);
+		}
+		// else --> read data into buff. Fill *line with rest untill /0, then fill *line with buff untill \n or \0
+		// if \n is found in buff, add remainder of buff to rest
+		else
+		{
+			size = read(fd, buff, BUFFER_SIZE);
+			if (size == 0)
+				return (0);	
+			buff[size] = '\0';
+			*line = create_array(*line, buff, rest);
+			if (size == -1)
+				return (-1);
+			rest_to_line(*line, rest);
+			buff_to_line_and_rest(*line, buff, rest);
+		}
 	}
 	return (1);
 }
-

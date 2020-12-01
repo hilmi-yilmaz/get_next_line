@@ -6,7 +6,7 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 10:49:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/11/28 13:45:46 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/01 20:00:42 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
-char COLOR[] = "\033[0;36m";
+char RED[] = "\033[1;31m";
 char RESET[] = "\033[0m";
 
 int		main(void)
@@ -31,11 +31,10 @@ int		main(void)
 	while (result != 0)
 	{
 		result = get_next_line(fd, &line);
-		if (result == 0)
-			break ;
-		printf("%s%s%s\n", COLOR, line, RESET);
+		printf("%sline = %s%s", RED, line, RESET);
+		printf("result = %d\n", result);
 		free(line);
-		line = NULL;
+		//line = NULL;
 	}
 	close(fd);
 	free(line);

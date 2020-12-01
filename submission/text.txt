@@ -10,4 +10,3 @@ This is the nineth line
 This is the tenth line
 This is the eleventh line
 This is the twelveth line
-This is the thirteenth line
