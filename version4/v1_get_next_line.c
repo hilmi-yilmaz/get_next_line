@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/04 20:27:45 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/04 21:31:57 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	rest_to_line(char *line, remains *re)
 		if (*(re->rest + re->i + i) == '\n')
 		{
 			*(re->rest + re->i + i) = '\0';
-			//re->i = re->i + 1;
+			re->i = re->i + 1;
 			break ;
 		}
 		*(line + len_line + i) = *(re->rest + re->i + i);
