@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/05 11:20:57 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/05 12:03:13 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,29 @@ int		get_next_line(int fd, char **line)
 	flag = 0;
 	buff[0] = '\0';
 	*line = NULL;
+	size = BUFFER_SIZE;
 	printf("re.i = %d\n", re.i);
 	print_rest(&re);
 	while (flag == 0)
 	{
 		printf("ENTER WHILE LOOP\n");
-		//If there is a newline in rest, don't read
-		if (ft_strchr(re.rest + re.i, '\n') == 1)
+		//If there is a no newline in rest, read data into buffer
+		if (ft_strchr(re.rest + re.i, '\n') == 0)
 		{
-			printf("Entered IF\n");
-			printf("Buff = %s\n", buff);
-			*line = create(*line, buff, &re);
-			rest_to_line(*line, &re);
-			return (1);
-		}
-		else
-		{
-			printf("Entered ELSE\n");
+			printf("No \\n in rest, read data\n");
 			size = read(fd, buff, BUFFER_SIZE);
-			printf("size = %d\n", size);
-			if (size == -1)
-				return (-1);
-			if (size == 0)
-				return (0);
 			buff[size] = '\0';
-			printf("buff = %s\n", buff);
-			*line = create(*line, buff, &re);
-			rest_to_line(*line, &re);
-			flag = buff_to_line_and_rest(*line, buff, &re);
-			printf("Flag = %d\n", flag);
 		}
+		printf("buff = %s\n", buff);
+		if (size == -1)
+			return (-1);
+		if (size == 0)
+			return (0);
+		*line = create(*line, buff, &re);
+		flag = rest_to_line(*line, buff, &re);
+		buff_to_line_and_rest(*line, buff, &re);
+		printf("flag = %d\n", flag);
 	}
-
-	printf("re.i = %d\n", re.i);
 	return (1);
 }
 
@@ -126,15 +116,18 @@ void	oldline_to_line(char *array, char *line)
 	printf("LEAVE OLDLINE_TO_LINE FUNCTION\n");	
 }
 
-void	rest_to_line(char *line, remains *re)
+int		rest_to_line(char *line, char *buff, remains *re)
 {
+	//only give buff as input to use for the flag
 	int i;
+	int flag;
 	int len_line;
 
 	printf("\nENTER REST_TO_LINE FUNCTION\n");
 	print_rest(re);
 
 	i = 0;
+	flag = ft_strchr(buff, '\n') + ft_strchr(re->rest + re->i, '\n');
 	len_line = ft_strlen(line, '\0');
 	printf("len_line = %d\n", len_line);
 	while (i < BUFFER_SIZE)
@@ -162,10 +155,10 @@ void	rest_to_line(char *line, remains *re)
 	printf("Added \\0 at *(line + %d + %d)\n", len_line, i);
 	print_rest(re);
 	printf("LEAVE REST_TO_LINE FUNCTION\n");
-	
+	return (flag);
 }
 
-int		buff_to_line_and_rest(char *line, char *buff, remains *re)
+void	buff_to_line_and_rest(char *line, char *buff, remains *re)
 {
 	int i;
 	int j;
@@ -195,5 +188,4 @@ int		buff_to_line_and_rest(char *line, char *buff, remains *re)
 	}
 	printf("LEAVE BUFF_TO_LINE_AND_REST FUNCTION\n");
 	print_rest(re);
-	return (ft_strchr(buff, '\n'));
 }

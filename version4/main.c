@@ -6,7 +6,7 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 10:49:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/04 21:32:00 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/05 12:02:19 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		main(void)
 	int 	result;
 	char	*line;
 	
-	fd = open("text.txt", O_RDONLY);
+	fd = open("text1.txt", O_RDONLY);
 	result = 1;
 	line = NULL;
 	while (result != 0)
