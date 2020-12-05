@@ -1,6 +1,0 @@
-How to read a file line by line?
-
-Ideas: 
-	- Read untill a \n is found in *line, then flag = 1.
-	- Don't read while there is a \n in rest. 
-
