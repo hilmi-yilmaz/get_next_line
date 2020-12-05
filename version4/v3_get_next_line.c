@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/05 12:29:23 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/05 15:48:12 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "get_next_line.h"
 
 
-void	print_rest(remains *re)
+void	print_rest(t_remains *re)
 {
 	int i;
 
@@ -39,10 +39,10 @@ void	print_rest(remains *re)
 
 int		get_next_line(int fd, char **line)
 {
-	int				size;
-	int				flag;
-	char			buff[BUFFER_SIZE + 1];
-	static remains	re;
+	int					size;
+	int					flag;
+	char				buff[BUFFER_SIZE + 1];
+	static t_remains	re;
 	
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
@@ -75,7 +75,7 @@ int		get_next_line(int fd, char **line)
 	return (1);
 }
 
-char	*create(char *line, char *buff, remains *re)
+char	*create(char *line, char *buff, t_remains *re)
 {
 	int		size;
 	char	*array;
@@ -116,7 +116,7 @@ void	oldline_to_line(char *array, char *line)
 	printf("LEAVE OLDLINE_TO_LINE FUNCTION\n");	
 }
 
-int		rest_to_line(char *line, char *buff, remains *re)
+int		rest_to_line(char *line, char *buff, t_remains *re)
 {
 	//only give buff as input to use for the flag
 	int i;
@@ -158,7 +158,7 @@ int		rest_to_line(char *line, char *buff, remains *re)
 	return (flag);
 }
 
-void	buff_to_line_and_rest(char *line, char *buff, remains *re)
+void	buff_to_line_and_rest(char *line, char *buff, t_remains *re)
 {
 	int i;
 	int j;

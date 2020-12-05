@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/05 13:28:19 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/05 16:06:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,29 @@
 #include <stdlib.h>
 #include "get_next_line.h"
 
+/*
+** The get_next_line-function uses the helper function to read a line
+** from a file descripter and stores the result in *line.
+** First some variables are set:
+** --> flag is used to indicate whether a newline is found and stops the
+** while loop.
+** --> *line is set to NULL.
+** --> size is set to BUFFER_SIZE. This is done because size needs to be
+** initialized even if we don't read, because we have \n in our remainder.
+** --> Also, if no data is read, buff[0] = '\0'. Also the in the case that
+** there is a \n in remainder
+** ------------------------------------------------------------------------
+** Then data is read and the other functions are being called to fill *line.
+*/
+
 int		get_next_line(int fd, char **line)
 {
-	int				size;
-	int				flag;
-	char			buff[BUFFER_SIZE + 1];
-	static remains	re;
+	int					size;
+	int					flag;
+	char				buff[BUFFER_SIZE + 1];
+	static t_remains	re;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || line == NULL)
 		return (-1);
 	flag = 0;
 	buff[0] = '\0';
@@ -43,7 +58,13 @@ int		get_next_line(int fd, char **line)
 	return (1);
 }
 
-char	*create(char *line, char *buff, remains *re)
+/*
+** The create-function allocates exactly enough memmory for *line.
+** It also fill line with old line, in case of BUFFERS_SIZE being
+** smaller than the length of the line.
+*/
+
+char	*create(char *line, char *buff, t_remains *re)
 {
 	int		size;
 	char	*array;
@@ -58,6 +79,12 @@ char	*create(char *line, char *buff, remains *re)
 	oldline_to_line(array, line);
 	return (array);
 }
+
+/*
+** The oldline_to_line-function is used in the create-function
+** to fill line with oldline
+** in the case of BUFFER_SIZE being smaller than the length of the line
+*/
 
 void	oldline_to_line(char *array, char *line)
 {
@@ -75,7 +102,19 @@ void	oldline_to_line(char *array, char *line)
 	free(line);
 }
 
-int		rest_to_line(char *line, char *buff, remains *re, int flag)
+/*
+** The rest_to_line-function fills line with rest if rest is not empty
+** Each time a character from rest is transferred to line
+** that character is converted to a \0 in rest.
+** Also the i variable of the struct is used to remember the offset
+** For example:
+** re->rest = [h i l m i \n y i l m a z \0 \0 \0]
+** After this function, rest looks like this:
+** re->rest = [\0 \0 \0 \0 \0 \0 y i l m a z \0 \0 \0]
+** re->i = 6.
+*/
+
+int		rest_to_line(char *line, char *buff, t_remains *re, int flag)
 {
 	int i;
 	int len_line;
@@ -104,7 +143,12 @@ int		rest_to_line(char *line, char *buff, remains *re, int flag)
 	return (flag);
 }
 
-void	buff_to_line_and_rest(char *line, char *buff, remains *re)
+/*
+** The buff_to_line_and_rest-function fills line with buff.
+** The remainder of buff is added to rest if needed.
+*/
+
+void	buff_to_line_and_rest(char *line, char *buff, t_remains *re)
 {
 	int i;
 	int j;
