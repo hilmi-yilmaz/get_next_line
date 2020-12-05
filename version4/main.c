@@ -6,7 +6,7 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 10:49:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/05 12:02:19 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/05 13:17:23 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ int		main(void)
 	int 	result;
 	char	*line;
 	
-	fd = open("text1.txt", O_RDONLY);
+	//fd = open("text1.txt", O_RDONLY);
+	fd = 0;
 	result = 1;
 	line = NULL;
 	while (result != 0)
 	{
 		result = get_next_line(fd, &line);
+		if (result == -1)
+			break ;
 		printf("%soutput = %s%s\n", RED, line, RESET);
 		printf("result = %d\n\n", result);
 		free(line);

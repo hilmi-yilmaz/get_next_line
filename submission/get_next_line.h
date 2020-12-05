@@ -3,17 +3,23 @@
 /*                                                        ::::::::            */
 /*   get_next_line.h                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
+/*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/12/01 13:19:26 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/01 19:41:45 by hyilmaz       ########   odam.nl         */
+/*   Created: 2020/12/02 17:11:32 by hyilmaz       #+#    #+#                 */
+/*   Updated: 2020/12/05 13:28:07 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+typedef struct remains {
+		int		i;
+		char 	rest[BUFFER_SIZE];
+} remains;
+
+
 int		get_next_line(int fd, char **line);
-char	*create_array(char *line, char *buff, char *rest);
-void	rest_to_line(char *line, char *rest);
-void	buff_to_line_and_rest(char *line, char *buff, char *rest);
-int		check_newline(char *str, int rest);
-int		ft_strlen(char *str);
-int		ft_strlen_rest(char *rest);;
+char	*create(char *line, char *buff, remains *re);
+void	oldline_to_line(char *array, char *line);
+int		rest_to_line(char *line, char *buff, remains *re, int flag);
+void	buff_to_line_and_rest(char *line, char *buff, remains *re);
+int		ft_strchr(char *s, int c);
+int		ft_strlen(char *s, char c);

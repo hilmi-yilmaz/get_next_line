@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/05 12:03:13 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/05 12:29:23 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		get_next_line(int fd, char **line)
 	char			buff[BUFFER_SIZE + 1];
 	static remains	re;
 	
-	if (fd <= 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
 	flag = 0;
 	buff[0] = '\0';
