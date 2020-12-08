@@ -16,12 +16,12 @@ Initial values:
 First call:
 	- buff = [\n \n \n h i l m i y i \0]
 	- *line = [\0]
-	- rest = [\0 \n \n h i l m i y i \0]
+	- rest = [\n \n h i l m i y i \0]
 
 Second call:
 	- buff = nothing, don't read while there is a \n in rest
 	- *line = [\0]
-	- rest = [\0 \0 \n h i l m i y i \0]
+	- rest = [\0 \n h i l m i y i \0]
 
 Third call:
 	- buff = emtpy, don't read while there is a \n in rest

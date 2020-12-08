@@ -6,7 +6,7 @@
 /*   By: hyilmaz <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 10:49:53 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/05 17:00:22 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/08 17:28:34 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int		main(void)
 	while (result != 0)
 	{
 		result = get_next_line(fd, &line);
-		if (result == -1 || result == 0)
-			break ;
 		printf("%soutput = %s%s\n", RED, line, RESET);
 		printf("result = %d\n\n", result);
+		if (result == -1 || result == 0)
+			break ;
 		free(line);
 		line = NULL;
 	}
