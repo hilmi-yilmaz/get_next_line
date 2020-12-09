@@ -6,34 +6,13 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 14:25:42 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/09 14:35:32 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "get_next_line_bonus.h"
-
-void	print_rest(t_remains *re)
-{
-	int i;
-
-	i = 0;
-	printf("rest = ");
-	while (i < BUFFER_SIZE)
-	{
-		if (*(re->rest + i) == '\0')
-			printf("\\0");
-		else if (*(re->rest + i) == '\n')
-			printf("\\n");
-		else
-			printf("%c", *(re->rest + i));
-		i++;
-	}
-	printf("---re->i = %d\n", re->i);
-	printf("\n");
-}
 
 /*
 ** The get_next_line-function uses the helper function to read a line
@@ -46,12 +25,12 @@ void	print_rest(t_remains *re)
 ** initialized even if we don't read, because we have \n in our remainder.
 ** --> Also, if no data is read, buff[0] = '\0'. No data is read when there
 ** is a \n in rest.
-** --> re[1024]. This is an array of structs. Each element (struct) of the 
+** --> re[1024]. This is an array of structs. Each element (struct) of the
 ** array is keeping track of the remainder of a specific file descriptor.
 ** 1024 is chosen because a process on a Linux system has a limit of 1024 file
-** descriptor. 
+** descriptor.
 ** ------------------------------------------------------------------------
-** Then, the data is read and the other functions are being called to 
+** Then, the data is read and the other functions are being called to
 ** fill *line.
 */
 
@@ -62,27 +41,16 @@ int		get_next_line(int fd, char **line)
 	char				buff[BUFFER_SIZE + 1];
 	static t_remains	re[1024];
 
-	
-	printf("Checking fd, BUFFER_SIZE and line\n");
 	if (fd < 0 || BUFFER_SIZE <= 0 || line == NULL)
-	{
-		printf("One of fd, BUFFER_SIZE and line is wrong, return -1\n");
 		return (-1);
-	}
-	printf("fd = %d\n", fd);
 	flag = 0;
 	buff[0] = '\0';
 	*line = NULL;
 	size = BUFFER_SIZE;
-	//print_rest(&re);
 	while (flag == 0)
 	{
-		printf("ENTER WHILE LOOP\n");
 		if (ft_strchr(re[fd].rest + re[fd].i, '\n') == 0)
-		{
 			size = read(fd, buff, BUFFER_SIZE);
-			printf("size = %d\n", size);
-		}
 		if (size == -1)
 			return (-1);
 		buff[size] = '\0';
@@ -106,17 +74,14 @@ char	*create(char *line, char *buff, t_remains *re)
 	int		size;
 	char	*array;
 
-	printf("\nENTER CREATE FUNCTION\n");
 	size = ft_strlen(line, '\0') + ft_strlen(buff, '\n') \
 			+ ft_strlen(re->rest + re->i, '\n');
 	array = (char *)malloc(sizeof(char) * size + 1);
-	printf("Allocate %d bytes for line\n", size + 1);
 	if (array == NULL)
 		return (NULL);
 	*(array + 0) = '\0';
 	*(array + size) = '\0';
 	oldline_to_line(array, line);
-	printf("LEAVE CREATE FUNCTION\n");
 	return (array);
 }
 
@@ -129,25 +94,17 @@ char	*create(char *line, char *buff, t_remains *re)
 void	oldline_to_line(char *array, char *line)
 {
 	int i;
-	
-	printf("\nENTER OLDLINE_TO_LINE FUNCTION\n");
+
 	if (line == NULL)
-	{
-		printf("line == NULL\nLEAVE OLDLINE_TO_LINE FUNCTION\n");
 		return ;
-	}
 	i = 0;
 	while (*(line + i) != '\0')
 	{
 		*(array + i) = *(line + i);
-		printf("Filling line with oldline --> *(line + %d) = %c\n", i, *(array + i));
 		i++;
 	}
 	*(array + i) = '\0';
-	printf("Added \\0 at *(line + %d)\n", i);
 	free(line);
-	printf("Freed old line\n");
-	printf("LEAVE OLDLINE_TO_LINE FUNCTION\n");
 }
 
 /*
@@ -167,8 +124,6 @@ int		rest_to_line(char *line, char *buff, t_remains *re, int flag)
 	int i;
 	int len_line;
 
-	printf("\nENTER REST_TO_LINE FUNCTION\n");
-	
 	i = 0;
 	flag = ft_strchr(buff, '\n') + ft_strchr(re->rest + re->i, '\n');
 	len_line = ft_strlen(line, '\0');
@@ -176,25 +131,20 @@ int		rest_to_line(char *line, char *buff, t_remains *re, int flag)
 	{
 		if (*(re->rest + re->i + i) == '\n')
 		{
-			printf("Found \\n in rest, break loop\n");
 			*(re->rest + re->i + i) = '\0';
 			re->i = re->i + i + 1;
 			break ;
 		}
 		else if (*(re->rest + re->i + i) == '\0')
 		{
-			printf("Found \\0 in rest, break loop and reset re->i = 0\n");
 			re->i = 0;
 			break ;
 		}
 		*(line + len_line + i) = *(re->rest + re->i + i);
-		printf("Filling line with rest --> *(line + %d + %d) = %c\n", len_line, i,  *(line + len_line + i));
 		*(re->rest + re->i + i) = '\0';
 		i++;
 	}
 	*(line + len_line + i) = '\0';
-	printf("Added \\0 at *(line + %d + %d)\n", len_line, i);
-	printf("LEAVE REST_TO_LINE FUNCTION\n");
 	return (flag);
 }
 
@@ -209,25 +159,19 @@ void	buff_to_line_and_rest(char *line, char *buff, t_remains *re)
 	int j;
 	int	len_line;
 
-	printf("\nENTER BUFF_TO_LINE_AND_REST FUNCTION\n");
-
 	i = 0;
 	j = 0;
 	len_line = ft_strlen(line, '\0');
 	while (*(buff + i) != '\0' && *(buff + i) != '\n')
 	{
 		*(line + len_line + i) = *(buff + i);
-		printf("Filling line with buff --> *(line + %d + %d) = %c\n", len_line, i, *(line + len_line + i));
 		i++;
 	}
 	*(line + len_line + i) = '\0';
-	printf("Addded \\0 at *(line + %d + %d)\n", len_line, i);
 	while (i < BUFFER_SIZE && *(buff + i) != '\0')
 	{
 		*(re->rest + re->i + j) = *(buff + i + 1);
-		printf("Filling rest with remainder of buff --> *(re->rest + %d + %d) = %c\n", re->i, j, *(re->rest + re->i + j));
 		i++;
 		j++;
 	}
-	printf("LEAVE BUFF_TO_LINE_AND_REST FUNCTION\n");
 }
