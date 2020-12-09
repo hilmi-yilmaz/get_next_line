@@ -6,12 +6,13 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 14:35:32 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/09 15:25:30 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "get_next_line_bonus.h"
 
 /*
@@ -41,7 +42,7 @@ int		get_next_line(int fd, char **line)
 	char				buff[BUFFER_SIZE + 1];
 	static t_remains	re[1024];
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || line == NULL)
+	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE <= 0 || line == NULL)
 		return (-1);
 	flag = 0;
 	buff[0] = '\0';
