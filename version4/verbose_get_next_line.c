@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/08 17:27:47 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/09 20:34:00 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,15 @@ int		get_next_line(int fd, char **line)
 		printf("One of fd, BUFFER_SIZE and line is wrong, return -1\n");
 		return (-1);
 	}
-	flag = 0;
-	buff[0] = '\0';
+	//flag = 0;
+	//buff[0] = '\0';
 	*line = NULL;
-	size = BUFFER_SIZE;
+	//size = BUFFER_SIZE;
+	set_values(buff, &flag, &size);
+	printf("*line = %s\n", *line);
+	printf("buff = %s\n", buff);
+	printf("flag = %d\n", flag);
+	printf("size = %d\n", size);
 	print_rest(&re);
 	while (flag == 0)
 	{
@@ -80,6 +85,8 @@ int		get_next_line(int fd, char **line)
 			return (-1);
 		buff[size] = '\0';
 		*line = create(*line, buff, &re);
+		if (*line == NULL)
+			return (-1);
 		flag = rest_to_line(*line, buff, &re, flag);
 		buff_to_line_and_rest(*line, buff, &re);
 		if (size == 0)

@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 14:25:42 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/09 15:37:20 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		get_next_line(int fd, char **line)
 
 	
 	printf("Checking fd, BUFFER_SIZE and line\n");
-	if (fd < 0 || BUFFER_SIZE <= 0 || line == NULL)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0 || line == NULL)
 	{
 		printf("One of fd, BUFFER_SIZE and line is wrong, return -1\n");
 		return (-1);

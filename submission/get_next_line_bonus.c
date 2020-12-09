@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 15:37:00 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/09 20:33:04 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ int		get_next_line(int fd, char **line)
 
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0 || line == NULL)
 		return (-1);
-	flag = 0;
-	buff[0] = '\0';
 	*line = NULL;
-	size = BUFFER_SIZE;
+	set_values(buff, &flag, &size);
 	while (flag == 0)
 	{
 		if (ft_strchr(re[fd].rest + re[fd].i, '\n') == 0)
@@ -55,6 +53,8 @@ int		get_next_line(int fd, char **line)
 			return (-1);
 		buff[size] = '\0';
 		*line = create(*line, buff, &re[fd]);
+		if (*line == NULL)
+			return (-1);
 		flag = rest_to_line(*line, buff, &re[fd], flag);
 		buff_to_line_and_rest(*line, buff, &re[fd]);
 		if (size == 0)
