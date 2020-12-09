@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/08 13:46:01 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2020/12/09 16:31:34 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,15 @@ int		ft_strlen(char *s, int c)
 		i++;
 	}
 	return (i);
+}
+
+/*
+** The set_values function sets some initial values
+*/
+
+void	set_values(char *buff, int *flag, int *size)
+{
+	buff[0] = '\0';
+	*flag = 0;
+	*size = BUFFER_SIZE;
 }
