@@ -27,6 +27,11 @@ The **src** folder contains the source files for the _get_next_line()_ function 
 ## :joystick: Example Program
 
 ```C
+#include <fcntl.h>
+#include <stdio.h>
+#include "get_next_line.h"
+#include <stdlib.h>
+
 int     main(void)
 {
     char    *line;
