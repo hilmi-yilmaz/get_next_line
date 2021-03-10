@@ -1,4 +1,4 @@
-# Get\_next\_line
+# get\_next\_line
 
 _Get\_next\_line()_ is a function  which can read from a file descriptor one line at a time and store the result in dynamically allocated memory. The function is also able to read from multiple file descriptors at the same time.
 
