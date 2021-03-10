@@ -6,14 +6,18 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:11:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 20:29:19 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2021/03/10 18:06:18 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-typedef struct	s_remains
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+typedef struct s_remains
 {
 	int			i;
 	char		rest[BUFFER_SIZE];

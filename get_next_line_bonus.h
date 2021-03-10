@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.h                                    :+:    :+:            */
+/*   get_next_line_bonus.h                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:11:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 20:30:17 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2021/03/10 18:06:10 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-typedef struct	s_remains
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+typedef struct s_remains
 {
 	int			i;
 	char		rest[BUFFER_SIZE];

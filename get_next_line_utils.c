@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:54 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 16:31:34 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2021/03/10 18:01:20 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 ** If found, it returns 1, else returns 0.
 */
 
-int		ft_strchr(char *s, int c)
+int	ft_strchr(char *s, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (*(s + i) != '\0')
@@ -38,9 +38,9 @@ int		ft_strchr(char *s, int c)
 ** It string points to NULL, the length is 0.
 */
 
-int		ft_strlen(char *s, int c)
+int	ft_strlen(char *s, int c)
 {
-	size_t i;
+	size_t	i;
 
 	if (s == NULL)
 		return (0);

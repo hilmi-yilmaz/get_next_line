@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:08:31 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2020/12/09 20:31:53 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2021/03/10 17:59:41 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 ** Then data is read and the other functions are being called to fill *line.
 */
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	int					size;
 	int					flag;
@@ -70,7 +70,7 @@ char	*create(char *line, char *buff, t_remains *re)
 	char	*array;
 
 	size = ft_strlen(line, '\0') + ft_strlen(buff, '\n') \
-			+ ft_strlen(re->rest + re->i, '\n');
+			 + ft_strlen(re->rest + re->i, '\n');
 	array = (char *)malloc(sizeof(char) * size + 1);
 	if (array == NULL)
 		return (NULL);
@@ -88,7 +88,7 @@ char	*create(char *line, char *buff, t_remains *re)
 
 void	oldline_to_line(char *array, char *line)
 {
-	int i;
+	int	i;
 
 	if (line == NULL)
 		return ;
@@ -114,10 +114,10 @@ void	oldline_to_line(char *array, char *line)
 ** re->i = 6.
 */
 
-int		rest_to_line(char *line, char *buff, t_remains *re, int flag)
+int	rest_to_line(char *line, char *buff, t_remains *re, int flag)
 {
-	int i;
-	int len_line;
+	int	i;
+	int	len_line;
 
 	i = 0;
 	flag = ft_strchr(buff, '\n') + ft_strchr(re->rest + re->i, '\n');
@@ -150,8 +150,8 @@ int		rest_to_line(char *line, char *buff, t_remains *re, int flag)
 
 void	buff_to_line_and_rest(char *line, char *buff, t_remains *re)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 	int	len_line;
 
 	i = 0;
