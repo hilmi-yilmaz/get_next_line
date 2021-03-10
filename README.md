@@ -1,4 +1,4 @@
-# Get\_next\_line Project
+# Get\_next\_line
 
 _Get\_next\_line()_ is a function  which can read from a file descriptor one line at a time and store the result in dynamically allocated memory. The function is also able to read from multiple file descriptors at the same time.
 
@@ -19,6 +19,10 @@ in which **fd** is the file descriptor to read from and **line** is the adress o
 
 
 >:warning: Dynamically allocated memory will be stored in **line**, so be sure to free the variable after each call to prevent memory leaks in your program.
+
+## :scroll: Contents
+
+The **src** folder contains the source files for the _get_next_line()_ function as explained above. The **extended_src** folder contains a _get_next_line()_ function which can read from multiple file descripters in one program.
 
 ## :joystick: Example Program
 
