@@ -6,7 +6,7 @@
 /*   By: hyilmaz <hyilmaz@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:11:32 by hyilmaz       #+#    #+#                 */
-/*   Updated: 2021/03/10 18:06:18 by hyilmaz       ########   odam.nl         */
+/*   Updated: 2021/03/20 14:05:29 by hyilmaz       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void			oldline_to_line(char *array, char *line);
 int				rest_to_line(char *line, char *buff, t_remains *re, int flag);
 void			buff_to_line_and_rest(char *line, char *buff, t_remains *re);
 int				ft_strchr(char *s, int c);
-int				ft_strlen(char *s, char c);
+int				ft_strlen(char *s, int c);
 void			set_values(char *buff, int *flag, int *size);
 
 #endif
